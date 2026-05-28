@@ -14,9 +14,9 @@ public:
 	int getBall() { return ball; }
 
 private:
-	bool solved;
-	int strike;
-	int ball;
+	bool solved = false;
+	int strike = 0;
+	int ball = 0;
 };
 
 class Baseball {
@@ -29,6 +29,8 @@ public:
 
 	GameResult* doGame(const string& guessNum)
 	{
+		if (answer.empty())
+			throw logic_error("setNum must be called before doGame");
 		validate(guessNum);
 
 		int strikes = countStrikes(guessNum);
@@ -40,7 +42,7 @@ public:
 	}
 
 private:
-	string answer = "111";
+	string answer;
 
 	int countStrikes(const string& guessNum)
 	{
