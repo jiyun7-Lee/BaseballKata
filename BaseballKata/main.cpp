@@ -71,6 +71,11 @@ TEST_F(BaseballFixture, ThrowWhenGuessIsNot3Digits) {
 	EXPECT_THROW(game->doGame("1234"), invalid_argument);
 }
 
+TEST(BaseballTest, ThrowWhenSetNumNotCalled) {
+	Baseball* game = new Baseball();
+	EXPECT_THROW(game->doGame("123"), logic_error);
+}
+
 TEST(BaseballTest, ThrowWhenAnswerHasDuplicateDigits) {
 	Baseball* game = new Baseball();
 	EXPECT_THROW(game->setNum("112"), invalid_argument);
