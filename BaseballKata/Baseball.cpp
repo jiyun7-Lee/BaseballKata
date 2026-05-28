@@ -1,7 +1,5 @@
-#include <iostream>
 #include <string>
-#include <vector>
-#include <algorithm>
+#include <stdexcept>
 using namespace std;
 
 class GameResult {
@@ -32,11 +30,14 @@ class Baseball {
 public:
 	void setNum(const string num)
 	{
+		validate(num);
 		answer = num;
 	}
 
 	GameResult* doGame(const string& guessNum)
 	{
+		validate(guessNum);
+
 		int strikes = 0;
 		int balls = 0;
 
@@ -60,4 +61,17 @@ public:
 
 private:
 	string answer = "111";
+
+	void validate(const string& num)
+	{
+		if (num.size() != 3)
+			throw invalid_argument("number must be 3 digits");
+		for (char c : num)
+			if (!isdigit(c))
+				throw invalid_argument("number must contain only digits");
+		for (int i = 0; i < (int)num.size(); i++)
+			for (int j = i + 1; j < (int)num.size(); j++)
+				if (num[i] == num[j])
+					throw invalid_argument("number must not contain duplicate digits");
+	}
 };

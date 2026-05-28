@@ -57,6 +57,45 @@ TEST(BaseballTest, ThreeStrikesWin) {
 	EXPECT_EQ(0, result->getBall());
 }
 
+TEST(BaseballTest, ThrowWhenAnswerHasDuplicateDigits) {
+	Baseball* game = new Baseball();
+	EXPECT_THROW(game->setNum("112"), invalid_argument);
+	EXPECT_THROW(game->setNum("111"), invalid_argument);
+}
+
+TEST(BaseballTest, ThrowWhenGuessHasDuplicateDigits) {
+	Baseball* game = new Baseball();
+	game->setNum("123");
+	EXPECT_THROW(game->doGame("112"), invalid_argument);
+	EXPECT_THROW(game->doGame("111"), invalid_argument);
+}
+
+TEST(BaseballTest, ThrowWhenAnswerContainsNonDigit) {
+	Baseball* game = new Baseball();
+	EXPECT_THROW(game->setNum("12a"), invalid_argument);
+	EXPECT_THROW(game->setNum("!23"), invalid_argument);
+}
+
+TEST(BaseballTest, ThrowWhenGuessContainsNonDigit) {
+	Baseball* game = new Baseball();
+	game->setNum("123");
+	EXPECT_THROW(game->doGame("12a"), invalid_argument);
+	EXPECT_THROW(game->doGame("!23"), invalid_argument);
+}
+
+TEST(BaseballTest, ThrowWhenAnswerIsNot3Digits) {
+	Baseball* game = new Baseball();
+	EXPECT_THROW(game->setNum("12"), invalid_argument);
+	EXPECT_THROW(game->setNum("1234"), invalid_argument);
+}
+
+TEST(BaseballTest, ThrowWhenGuessIsNot3Digits) {
+	Baseball* game = new Baseball();
+	game->setNum("123");
+	EXPECT_THROW(game->doGame("12"), invalid_argument);
+	EXPECT_THROW(game->doGame("1234"), invalid_argument);
+}
+
 int main()
 {
 	testing::InitGoogleMock();
